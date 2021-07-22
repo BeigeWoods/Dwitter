@@ -27,10 +27,10 @@ export default class TweetService {
       }),
     });
     const data = await response.json();
+    console.log("json: ", data);
     if (response.status !== 201) {
       throw new Error(data.message);
     }
-    console.log(data);
     return data;
   }
 
