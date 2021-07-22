@@ -5,7 +5,7 @@ export default class TweetService {
 
   async getTweets(username) {
     let query = username ? `?username=${username}` : "";
-    const response = await fetch(`${this.baseURL}/tweets${query}`, {
+    const response = await fetch(`${this.baseURL}/${query}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -17,7 +17,7 @@ export default class TweetService {
   }
 
   async postTweet(text) {
-    const response = await fetch(`${this.baseURL}/tweets/`, {
+    const response = await fetch(`${this.baseURL}/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -35,7 +35,7 @@ export default class TweetService {
   }
 
   async deleteTweet(tweetId) {
-    const response = await fetch(`${this.baseURL}/tweets/${tweetId}`, {
+    const response = await fetch(`${this.baseURL}/${tweetId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
@@ -46,7 +46,7 @@ export default class TweetService {
   }
 
   async updateTweet(tweetId, text) {
-    const response = await fetch(`${this.baseURL}/tweets/${tweetId}`, {
+    const response = await fetch(`${this.baseURL}/${tweetId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
