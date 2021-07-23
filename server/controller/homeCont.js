@@ -1,22 +1,15 @@
-import { tweets } from "../data/tweets.js";
+import * as tweetData from "../data/tweets.js";
 
-export function home(req, res) {
-  const { username } = req.query;
-  const data = username
-    ? tweets.filter((t) => t.username === username)
-    : tweets;
+export async function home(req, res) {
+  const username = req.query.username;
+  const data = await (username
+    ? tweetData.getAllByUsername(username)
+    : tweetData.getAll());
   res.status(200).json(data);
 }
 
-export function postTweet(req, res) {
+export async function postTweet(req, res) {
   const { text, name, username } = req.body;
-  const tweet = {
-    id: String(Date.now()),
-    text,
-    createdAt: Date.now().toString(),
-    name,
-    username,
-  };
-  tweets.unshift(tweet);
-  res.status(201).json(tweets);
+  const tweet = await tweetData.create(text, name, username);
+  res.status(201).json(tweet);
 }
