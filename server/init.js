@@ -1,5 +1,5 @@
 import express from "express";
-import homeRouter from "./router/home.js";
+import homeRouter from "./router/router.js";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
