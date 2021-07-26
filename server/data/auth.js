@@ -1,33 +1,15 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+let users = [];
 
-export function hashPassword(password) {
-  const hashed = bcrypt.hashSync(password, 10);
-  return hashed;
+export async function findByUsername(username) {
+  return users.find((user) => user.username === username);
 }
 
-export function compPassword(password, hashed) {
-  const result = bcrypt.compareSync(password, hashed);
-  return result;
+export async function findById(id) {
+  return users.find((user) => user.id === id);
 }
 
-export function token() {
-  const secret = "fSTWh2471^%Vw9dmUyYR$BXL*VJhq&N&";
-  const token = jwt.sign(
-    {
-      id: String(Date.now()),
-      isAdmin: false,
-    },
-    secret,
-    { expiresIn: 2 }
-  );
-  return token;
-}
-
-export function resData(username) {
-  const data = {
-    username,
-    token: token(),
-  };
-  return data;
+export async function createUser(user) {
+  const created = { ...user, id: Date.now().toString() };
+  users.push(created);
+  return created.id;
 }
