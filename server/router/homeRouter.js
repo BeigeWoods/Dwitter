@@ -1,10 +1,10 @@
 import express from "express";
-import { home, postTweet } from "../controller/homeCont.js";
+import { home, postTweet } from "../controller/home/homeCont.js";
 import {
   readUserTweet,
   updateTweet,
   deleteTweet,
-} from "../controller/userCont.js";
+} from "../controller/home/userCont.js";
 import { textValidation } from "../middleware/validator.js";
 
 const router = express.Router();

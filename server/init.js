@@ -1,5 +1,6 @@
 import express from "express";
-import homeRouter from "./router/router.js";
+import homeRouter from "./router/homeRouter.js";
+import authRouter from "./router/authRouter.js";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
@@ -13,6 +14,8 @@ app.use(cors());
 app.use(morgan("tiny"));
 
 app.use("/", homeRouter);
+app.use("/auth", authRouter);
+
 //로그인하지 않은 이용자
 app.use((req, res, next) => {
   res.sendStatus(404);

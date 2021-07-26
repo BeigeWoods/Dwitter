@@ -1,4 +1,4 @@
-import * as tweetData from "../data/tweets.js";
+import * as tweetData from "../../data/tweets.js";
 
 export async function readUserTweet(req, res) {
   const { id } = req.params;

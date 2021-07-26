@@ -1,4 +1,4 @@
-import { body, param, validationResult } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 const validate = (req, res, next) => {
   const errors = validationResult(req);
@@ -28,3 +28,33 @@ export const textValidation = [
 //   param("id").trim().isInt().withMessage("id는 공백없이 숫자여야 합니다."),
 //   validate,
 // ];
+
+export const joinValidation = [
+  body("username")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("공백 없이 1자 이상 입력하세요."),
+  body("password")
+    .trim()
+    .isLength({ min: 8, max: 16 })
+    .withMessage("공백 없이 8자 이상 16자 이하로 작성하세요."),
+  body("name")
+    .trim()
+    .isString()
+    .isLength({ min: 2 })
+    .withMessage("공백 없이 두 글자 이상 입력하세요."),
+  body("email").isEmail().normalizeEmail().withMessage("이메일 입력해요"),
+  validate,
+];
+
+export const loginValidation = [
+  body("username")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("공백 없이 1자 이상 입력하세요."),
+  body("password")
+    .trim()
+    .isLength({ min: 8, max: 16 })
+    .withMessage("공백 없이 8자 이상 16자 이하로 작성하세요."),
+  validate,
+];
