@@ -9,7 +9,7 @@ export async function home(req, res) {
 }
 
 export async function postTweet(req, res) {
-  const { text, name, username } = req.body;
-  const tweet = await tweetData.create(text, name, username);
+  const { text } = req.body;
+  const tweet = await tweetData.create(text, req.userId);
   res.status(201).json(tweet);
 }
