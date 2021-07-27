@@ -2,10 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import "express-async-errors";
 import { findByUsername, findById, createUser } from "../../data/auth.js";
-
-const jwtSecretKey = "F2dN7x8HVz%Vw9dmUyYR$BXL*VJhq&N&";
-const jwtExpiresInDays = "2d";
-const bcryptSaltRounds = 12;
+import { config } from "../../config.js";
 
 export async function postJoin(req, res) {
   const { username, password, name, email, url } = req.body;
@@ -13,7 +10,7 @@ export async function postJoin(req, res) {
   if (found) {
     return res.status(409).json({ message: `${username}은 이미 존재합니다.` });
   }
-  const hashed = await bcrypt.hash(password, bcryptSaltRounds);
+  const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
   const userId = await createUser({
     username,
     password: hashed,
@@ -44,7 +41,9 @@ export async function postLogin(req, res) {
 }
 
 function createJwtToken(id) {
-  return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpiresInDays });
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: config.jwt.expiresInSec,
+  });
 }
 
 export async function getMe(req, res) {
