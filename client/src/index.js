@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { AuthErrorEventBus } from "./context/AuthContext";
 // import socket from "socket.io-client";
-import HttpClient from "../network/http";
+import HttpClient from "./network/http";
 import TokenStorage from "./db/token";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
