@@ -6,6 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import "express-async-errors";
 import { config } from "./config.js";
+import { Server } from "socket.io";
 
 const app = express();
 
@@ -26,5 +27,3 @@ app.use((req, res, next) => {
   console.error(error);
   res.sendStatus(500);
 });
-
-app.listen(config.host.port);
