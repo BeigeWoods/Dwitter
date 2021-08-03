@@ -1,5 +1,5 @@
 import * as tweetData from "../../data/tweets.js";
-import { getSocketIO } from "../connection/socket.js";
+import { getSocketIO } from "../../connection/socket.js";
 
 export async function home(req, res) {
   const username = req.query.username;
