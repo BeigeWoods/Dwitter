@@ -1,8 +1,8 @@
-import Mongoose from "mongoose";
+import mongoose from "mongoose";
 import { config } from "../config.js";
 
 export async function connectDB() {
-  return Mongoose.connect(config.db.host, {
+  return mongoose.connect(config.db.host, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -18,8 +18,3 @@ export function useVirtualId(schema) {
 }
 
 // TODO(Ellie): Delete blow
-
-let db;
-export function getTweets() {
-  return db.collection("tweets");
-}

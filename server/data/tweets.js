@@ -1,8 +1,8 @@
-import Mongoose from "mongoose";
-import { useVirtualId } from "../database/database.js";
+import mongoose from "mongoose";
+import { useVirtualId } from "../db/database.js";
 import * as UserRepository from "./auth.js";
 
-const tweetSchema = new Mongoose.Schema(
+const tweetSchema = new mongoose.Schema(
   {
     text: { type: String, required: true },
     userId: { type: String, required: true },
@@ -14,7 +14,7 @@ const tweetSchema = new Mongoose.Schema(
 );
 
 useVirtualId(tweetSchema);
-const Tweet = Mongoose.model("Tweet", tweetSchema);
+const Tweet = mongoose.model("Tweet", tweetSchema);
 
 export async function getAll() {
   return Tweet.find().sort({ createdAt: -1 });
