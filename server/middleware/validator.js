@@ -36,8 +36,8 @@ export const loginValidation = [
     .withMessage("공백 없이 1자 이상 입력하세요."),
   body("password")
     .trim()
-    .isLength({ min: 8, max: 16 })
-    .withMessage("공백 없이 8자 이상 16자 이하로 작성하세요."),
+    .isLength({ max: 16 })
+    .withMessage("공백 없이 16자 이하로 작성하세요."),
   validate,
 ];
 

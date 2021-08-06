@@ -4,7 +4,7 @@ import "express-async-errors";
 import { findByUsername, findById, createUser } from "../../data/auth.js";
 import { config } from "../../config.js";
 
-export async function postJoin(req, res) {
+export async function join(req, res) {
   const { username, password, name, email, url } = req.body;
   const found = await findByUsername(username);
   if (found) {
@@ -23,7 +23,7 @@ export async function postJoin(req, res) {
   res.status(201).json({ token, username });
 }
 
-export async function postLogin(req, res) {
+export async function login(req, res) {
   const { username, password } = req.body;
   const user = await findByUsername(username);
   if (!user) {
@@ -37,9 +37,22 @@ export async function postLogin(req, res) {
       .status(401)
       .json({ message: "사용자 또는 비밀번호가 유효하지 않습니다." });
   }
-  const token = createJwtToken(userId);
+  const token = createJwtToken(user.id);
   setToken(res, token);
   res.status(200).json({ token, username });
+}
+
+export async function getMe(req, res) {
+  const user = await findById(req.userId);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json({ token: req.token, username: user.username });
+}
+
+export async function logout(req, res) {
+  res.cookie("token", "");
+  res.status(200).json({ message: "User has been logged out" });
 }
 
 function createJwtToken(id) {
@@ -56,12 +69,4 @@ function setToken(res, token) {
     secure: true,
   };
   res.cookie("token", token, options); //HTTP-ONLY
-}
-
-export async function getMe(req, res) {
-  const user = await findById(req.userId);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  res.status(200).json({ token: req.token, username: user.username });
 }
