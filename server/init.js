@@ -1,10 +1,11 @@
 import express from "express";
+import morgan from "morgan";
+import helmet from "helmet";
+import cors from "cors";
+import "express-async-errors";
+import cookieParser from "cookie-parser";
 import homeRouter from "./router/homeRouter.js";
 import authRouter from "./router/authRouter.js";
-import morgan from "morgan";
-import cors from "cors";
-import helmet from "helmet";
-import "express-async-errors";
 import { config } from "./config.js";
 import { initSocket } from "./connection/socket.js";
 import { connectDB } from "./db/database.js";
@@ -14,9 +15,11 @@ const app = express();
 const corsOption = {
   origin: config.cors.allowedOrigin,
   optionsSuccessStatus: 200,
+  credentials: true, //allow the Access-Control-Allow-Credentials
 };
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(helmet());
 app.use(cors(corsOption));
 app.use(morgan("tiny"));

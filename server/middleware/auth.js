@@ -4,12 +4,20 @@ import * as userRepository from "../data/auth.js";
 const AUTH_ERROR = { message: "Authentication Error" };
 
 export const isAuth = async (req, res, next) => {
+  let token;
+  //check the header first
   const authHeader = req.get("Authorization");
-  if (!(authHeader && authHeader.startsWith("Bearer "))) {
-    return res.status(401).json(AUTH_ERROR);
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    token = authHeader.split(" ")[1];
+  }
+  // if no token in the header, check the cookie
+  if (!token) {
+    token = req.cookies["token"];
   }
 
-  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json(AUTH_ERROR);
+  }
   // TODO: Make it secure!
   jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
     if (error) {
