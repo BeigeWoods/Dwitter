@@ -27,6 +27,10 @@ export const config = {
     allowedOrigin: required("CORS_ALLOW_ORIGIN"),
   },
   csrf: {
-    plainToken: required('CSRF_SECRET_KEY'),
-  }
+    plainToken: required("CSRF_SECRET_KEY"),
+  },
+  rateLimit: {
+    windowMs: required("RATELIMIT_WINDOW_MS"),
+    maxRequest: required("RATELIMIT_MAX_REQUEST"),
+  },
 };
